@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+<style>
+form
+{
+    margin: auto;
+    width: 35%;
+}
+.result
+{
+    margin: auto;
+    width: 35%;
+    border: 1px solid #ccc;
+}
+.heading
+{
+    margin: auto;
+}
+.button
+{
+    margin: auto;
+}
+</style><head>
+    <title>Infowars Text Generator</title>
+</head>
+
+<div class="heading" align="center">
+    <h1>Infowars Text Generator</h1>
+</div>
+
+<!--<form action="{{ url_for('main') }}" method="POST">
+    <fieldset>
+        <legend>Input values:</legend>
+        Temperature:
+        <input name="temperature" type="number" required>
+        <br>
+        <br> Humidity:
+        <input name="humidity" type="number" required>
+        <br>
+        <br> Windspeed:
+        <input name="windspeed" type="number" required>
+        <br>
+        <br>
+        <input type="submit">
+    </fieldset>
+</form>-->
+
+<form action="{{ url_for('main') }}" method="POST">
+    <fieldset>
+        Prompt (headline or keyword):
+        <input name="prompt" type="text" required>
+        <br>
+        <input name="model" type="radio" id="word" value="word" required>
+        <label for="word">Word-level model</label>
+        <br>
+        <input name="model" type="radio" id="char" value="char" required>
+        <label for="char">Character-level model</label>
+        <br>
+        <input type="submit">
+    </fieldset>
+</form>
+
+<!--<div class="button" align="center">
+    <button type="submit" formaction="{{ url_for('main') }}" formmethod="POST">Fluoridate</button>
+</div>-->
+
+<br>
+<div class="result">
+    {% if result %}
+        {% for variable, value in original_input.items() %}
+            <b>{{ variable }}</b> : {{ value }}
+        {% endfor %}
+        <br>
+        <br> Predicted number of bikes in use:
+           <p style="font-size:50px">{{ result }}</p>
+    {% endif %}
+</div></html>
