@@ -11,10 +11,10 @@ ARTICLE_WORDS = 100
 #vocab = np.array(sorted(set(text)))
 #word_indices = dict((i,c) for i,c in enumerate(vocab))
 #indices_words = dict((c,i) for c,i in enumerate(vocab))
-#file = open('model/idx2char.txt', 'rb')
-#idx2char = pickle.load(file)
-#file = open('model/char2idx.txt', 'rb')
-#char2idx= pickle.load(file)
+file = open('model/models/idx2char.pickle', 'rb')
+idx2char = pickle.load(file)
+file = open('model/models/char2idx.pickle', 'rb')
+char2idx= pickle.load(file)
 
 def sample(preds):
     preds = np.asarray(preds).astype('float64')
@@ -94,18 +94,21 @@ def main():
         modeltype = "char"#flask.request.form['model']
         epochs = flask.request.form['epochs']
         outputsize = flask.request.form['outputsize']
+        seqlen = flask.request.form['seqlen']
+
         epochs=int(epochs)
+        seqlen=int(seqlen)
 
         #text_generated = list()
-        idx2char = None
-        char2idx = None
+        #idx2char = None
+        #char2idx = None
 
         if modeltype == "char":
-            model = tf.keras.models.load_model('model/char{}_model.h5'.format(epochs))
-            file = open('model/idx2char_{}.txt'.format(epochs), 'rb')
-            idx2char = pickle.load(file)
-            file = open('model/char2idx_{}.txt'.format(epochs), 'rb')
-            char2idx = pickle.load(file)
+            model = tf.keras.models.load_model('model/models/char_seq{}_ep{}.h5'.format(seqlen, epochs))
+            #file = open('model/idx2char_{}.txt'.format(epochs), 'rb')
+            #idx2char = pickle.load(file)
+            #file = open('model/char2idx_{}.txt'.format(epochs), 'rb')
+            #char2idx = pickle.load(file)
             output = generate_text(model, prompt, int(outputsize), char2idx, idx2char)
         """
         else:
@@ -124,7 +127,8 @@ def main():
         return flask.render_template('main.html', original_input={'prompt':prompt,
                                                                   'model':modeltype,
                                                                   'epochs':epochs,
-                                                                  'outputsize':outputsize},
+                                                                  'outputsize':outputsize,
+                                                                  'seqlen':seqlen},
                                     result = output,)
 
     return(flask.render_template('main.html'))
