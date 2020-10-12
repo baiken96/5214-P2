@@ -50,11 +50,29 @@ form
         Prompt (headline or keyword):
         <input name="prompt" type="text" required>
         <br>
-        <input name="model" type="radio" id="word" value="word" required>
+        <!--<input name="model" type="radio" id="word" value="word" required>
         <label for="word">Word-level model</label>
         <br>
         <input name="model" type="radio" id="char" value="char" required>
         <label for="char">Character-level model</label>
+        <br>-->
+        <input name="epochs" type="radio" id="1" value="1" required>
+        <label for="1">1 epoch</label>
+        <br>
+        <input name="epochs" type="radio" id="5" value="5" required>
+        <label for="5">5 epochs</label>
+        <br>
+        <input name="epochs" type="radio" id="10" value="10" required>
+        <label for="10">10 epochs</label>
+        <br>
+        <input name="epochs" type="radio" id="15" value="15" required>
+        <label for="15">15 epochs</label>
+        <br>
+        <input name="epochs" type="radio" id="20" value="20" required>
+        <label for="20">20 epoch</label>
+        <br>
+        Output size (in chars for char model, words for word model):
+        <input name="outputsize" type="number" required>
         <br>
         <input type="submit">
     </fieldset>
@@ -71,7 +89,7 @@ form
             <b>{{ variable }}</b> : {{ value }}
         {% endfor %}
         <br>
-        <br> Predicted number of bikes in use:
+        <br>
            <p style="font-size:50px">{{ result }}</p>
     {% endif %}
 </div></html>
